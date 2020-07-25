@@ -27,7 +27,7 @@ _start:
   
   ;lets build sockaddr_in
   push edx     ; edx = 0, 0.0.0.0
-  push word 0x3905  ; 9999 (reverse order)  
+  push word 0x3905  ; port 1337  (reverse order)  
   push word 0x2     ; family - AF_INET
   
 
