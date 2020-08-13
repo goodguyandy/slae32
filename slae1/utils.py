@@ -12,5 +12,10 @@ def pushstr(s):
     for i in range(0, len(s),8):
         print "push " +  s[i:i+8] 
 
+def str2bytes(s):
+    s = s.encode("hex")
+    s = bytearray.fromhex(s)
+    return ''.join(format(x,'02x') for x in s).upper()
+ 
 
 
